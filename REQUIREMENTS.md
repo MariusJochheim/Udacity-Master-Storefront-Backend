@@ -5,20 +5,20 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 #### Products
-- Index 
-- Show
-- Create [token required]
-- [OPTIONAL] Top 5 most popular products 
-- [OPTIONAL] Products by category (args: product category)
+- Index: `/products` [GET]
+- Show: `/products/:id` [GET]
+- Create: `/products` [POST] [token required]
+- [OPTIONAL] Top 5 most popular products: `/products/popular` [GET]
+- [OPTIONAL] Products by category (args: product category): `/products/category/:category` [GET]
 
 #### Users
-- Index [token required]
-- Show [token required]
-- Create N[token required]
+- Index: `/users` [GET] [token required]
+- Show: `/users/:id` [GET] [token required]
+- Create: `/users` [POST] [token required]
 
 #### Orders
-- Current Order by user (args: user id)[token required]
-- [OPTIONAL] Completed Orders by user (args: user id)[token required]
+- Current Order by user (args: user id): `/users/:user_id/orders/current` [GET] [token required]
+- [OPTIONAL] Completed Orders by user (args: user id): `/users/:user_id/orders/completed` [GET] [token required]
 
 ## Data Shapes
 #### Product
@@ -40,3 +40,11 @@ These are the notes from a meeting with the frontend developer that describe wha
 - user_id
 - status of order (active or complete)
 
+## Database Tables
+Table: products (id:SERIAL PRIMARY KEY, name:VARCHAR NOT NULL, price:NUMERIC NOT NULL, category:VARCHAR)
+
+Table: users (id:SERIAL PRIMARY KEY, first_name:VARCHAR NOT NULL, last_name:VARCHAR NOT NULL, password_digest:VARCHAR NOT NULL)
+
+Table: orders (id:SERIAL PRIMARY KEY, user_id:INTEGER NOT NULL [foreign key to users table], status:VARCHAR NOT NULL)
+
+Table: order_products (id:SERIAL PRIMARY KEY, order_id:INTEGER NOT NULL [foreign key to orders table], product_id:INTEGER NOT NULL [foreign key to products table], quantity:INTEGER NOT NULL)
